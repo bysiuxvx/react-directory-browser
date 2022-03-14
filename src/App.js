@@ -1,25 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react"
+import axios from "axios"
 
-function App() {
+import Body from "./components/Body"
+
+import "./style.scss"
+
+const App = () => {
+  const [data, setData] = useState([])
+  const key =
+    "https://fnp5vd20r2.execute-api.us-east-1.amazonaws.com/dev/directories"
+
+  useEffect(() => {
+    axios.get(key).then((res) => {
+      const response = res.data
+      const combinedArr = response.directories.concat(response.files)
+      setData(combinedArr)
+    })
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <Body data={data} />
+    </>
+  )
 }
 
-export default App;
+export default App
