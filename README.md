@@ -18,7 +18,7 @@ To download
 
     $ git clone https://github.com/bysiuxvx/react-directory-browser.git
 
-cd into folder
+cd into folder to build
 
     yarn
 
