@@ -14,12 +14,12 @@ material-ui icons
 
 ## How to use
 
-    ```$ git clone https://github.com/bysiuxvx/react-directory-browser.git```
+    `$ git clone https://github.com/bysiuxvx/react-directory-browser.git`
 
     cd into folder
 
-    ```yarn````
+    `yarn`
 
     to start
 
-    ```yarn start```
+    `yarn start`
