@@ -1,27 +1,57 @@
 import React, { useEffect, useState } from "react"
-import axios from "axios"
 
-import Body from "./components/Body"
+import { getDirectoryDetails } from "./controllers/directoriesController"
 
-import "./style.scss"
+import Navigation from "./components/Navigation"
+import FolderContents from "./components/FolderContents"
+
+import { Container } from "@chakra-ui/react"
+
+import "./styles/style.scss"
 
 const App = () => {
-  const [data, setData] = useState([])
-  const key =
-    "https://fnp5vd20r2.execute-api.us-east-1.amazonaws.com/dev/directories"
+  const [directoryPath, setDirectoryPath] = useState([])
+  const [directoryId, setDirectoryId] = useState(null)
+  const [contents, setContents] = useState([])
+
+  const getContentsPath = async () => {
+    const directory = await getDirectoryDetails(directoryId)
+    const { id, name, contents } = directory
+    setContents(contents)
+    addToDirectoryPath({
+      id,
+      name,
+    })
+  }
 
   useEffect(() => {
-    axios.get(key).then((res) => {
-      const response = res.data
-      const combinedArr = response.directories.concat(response.files)
-      setData(combinedArr)
-    })
-  }, [])
+    getContentsPath()
+  }, [directoryId])
+
+  const setCurrentDirectory = (item) => {
+    setDirectoryId(Number(item.id))
+  }
+
+  const addToDirectoryPath = (directory) => {
+    setDirectoryPath([...directoryPath, directory])
+  }
+
+  const onBreadcrumbsClick = (directory, i) => {
+    setCurrentDirectory(directory)
+    setDirectoryPath([...directoryPath.filter((directory, index) => index < i)])
+  }
 
   return (
-    <>
-      <Body data={data} />
-    </>
+    <Container maxW="container.xl" p={0} overflow="hidden">
+      <Navigation
+        directoryPath={directoryPath}
+        setDirectory={onBreadcrumbsClick}
+      />
+      <FolderContents
+        contents={contents}
+        setCurrentDirectory={setCurrentDirectory}
+      />
+    </Container>
   )
 }
 
