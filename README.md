@@ -16,7 +16,7 @@ material-ui icons
 
 To download
 
-    $ git clone https://github.com/bysiuxvx/react-directory-browser.git
+    git clone https://github.com/bysiuxvx/react-directory-browser.git
 
 cd into folder to build
 
